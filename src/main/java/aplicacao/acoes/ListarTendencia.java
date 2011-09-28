@@ -1,27 +1,33 @@
 package aplicacao.acoes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-
-import aplicacao.MapUtils;
-
+import java.util.Iterator;
+import java.util.TreeMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 import negocio.Mensagem;
 
 public class ListarTendencia {
 	
 	private static final int totalDeRetorno = 5;
-	
+		
 	public static String executa(String comando) {
 		
 		try {
 			
-			HashMap<String, Integer> msgs = Mensagem.listarTendencias();
+			TreeMap<String, Integer> todasTendencias = Mensagem.listarTendencias();
 			String retorno = "";
 
-			int i = 0;
-			while ( i < ListarTendencia.totalDeRetorno) {
-				retorno +=  MapUtils.getKeysByValue(msgs, lista[i]) + "\n";
-				i ++;
+			Set msgSet = todasTendencias.entrySet();
+			Iterator i = msgSet.iterator();
+			
+			int contador = 0;
+			while ( i.hasNext() && (contador < totalDeRetorno) ) {
+	           Map.Entry m =(Map.Entry)i.next();
+	           
+		       String tendencia = (String)m.getKey();
+		       retorno += tendencia + '\n';      
+		       contador ++;     
 			}
 			
 			return retorno.trim();				

@@ -1,13 +1,37 @@
 package negocio;
 
-import java.text.Bidi;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import persistencia.CheckParamException;
 import persistencia.Entidade;
 import persistencia.Persistencia;
 import persistencia.Tabela;
+
+
+class ValueComparator implements Comparator {
+
+	  Map base;
+	  public ValueComparator(Map base) {
+	      this.base = base;
+	  }
+
+	  public int compare(Object a, Object b) {
+
+	    if((Integer)base.get(a) < (Integer)base.get(b)) {
+	      return 1;
+	    } else if((Integer)base.get(a) == (Integer)base.get(b)) {
+	      return 0;
+	    } else {
+	      return -1;
+	    }
+	  }
+}
 
 public class Mensagem extends Entidade {
 
@@ -41,11 +65,10 @@ public class Mensagem extends Entidade {
 	}
 	
 	@Override
-	protected void testaConsistencia() throws CheckParamException {
-		// nÃ£o vazias com atÃ© 140
+	protected void testaConsistencia() throws CheckParamException {	
 		boolean mensagemInvalida = false;
 		
-		mensagemInvalida |= (this.getMensagem().isEmpty());
+		mensagemInvalida |= (this.getMensagem().length() == 0);
 		mensagemInvalida |= (this.getMensagem().length() > 140);
 		
 		if (mensagemInvalida) {
@@ -95,38 +118,39 @@ public class Mensagem extends Entidade {
 		return retorno;
 	}
 	
-	public static Bidi algo() {
-		
-		return null;
-	}
-	public static HashMap<String, Integer> listarTendencias() {
+	public static TreeMap<String, Integer> listarTendencias() {
 		
 		Tabela tabela = Persistencia.getInstancia().procuraTabela(Mensagem.nomeTabela);
-		
+
+		TreeMap<String, Integer> contador = new TreeMap<String, Integer>();
+        ValueComparator comparator =  new ValueComparator(contador);
+        TreeMap<String,Integer> sorted_map = new TreeMap(comparator);
+        
 		if (tabela == null) {
-			return null;
+			return sorted_map;
 		}
 		
-		HashMap<String, Integer> contador = new HashMap<String, Integer>();
 		Mensagem msg;
-		
 		for (int i = 0; i < tabela.size(); i++) {
 			msg = (Mensagem) tabela.get(i);
-			String[] topicos = msg.getMensagem().split("#([a-z][A-Z][0-9])* ");
-			if (topicos.length > 0) {
-				for ( int j = 0; j < topicos.length; j++) {
-					
-					int acumulado = 0;
-					if (contador.containsValue(topicos[j])) {
-						acumulado = contador.get(topicos[j]);
-					}
-					
-					contador.put(topicos[j], acumulado + 1);
+			
+			Pattern MY_PATTERN = Pattern.compile("#([a-z]|[A-Z]|[0-9]|[á-í])*");
+			Matcher m = MY_PATTERN.matcher(msg.getMensagem());
+			while (m.find()) {
+			    String s = m.group(0).trim();
+				int acumulado = 0;
+				
+				if (contador.containsKey(s)) {
+					acumulado = contador.get(s);
+					contador.remove(s);
 				}
+				acumulado ++;
+				contador.put(s, acumulado);	
+			    
 			}
 		}
-		
-		return contador;
+		sorted_map.putAll(contador);		
+		return sorted_map;
 	}
 
 }
