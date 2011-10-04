@@ -5,6 +5,7 @@ import aplicacao.acoes.DeixarDeSeguir;
 import aplicacao.acoes.ListarEstatisticasUsuario;
 import aplicacao.acoes.ListarMensagemSeguidos;
 import aplicacao.acoes.ListarMensagemUsuario;
+import aplicacao.acoes.ListarMensagensPalavraMarcada;
 import aplicacao.acoes.ListarSeguidores;
 import aplicacao.acoes.ListarSeguidos;
 import aplicacao.acoes.ListarTendencia;
@@ -73,7 +74,12 @@ public class Apresentacao {
 		if (comando.startsWith("listar-tendencia")) {
 			  comando = comando.replace("listar-tendencia", "").trim();
 			  return ListarTendencia.executa(comando);
-		}		
+		}
+		
+		if (comando.startsWith("listar-mensagens-com-palavra-marcada")) {
+			  comando = comando.replace("listar-mensagens-com-palavra-marcada", "").trim();
+			  return ListarMensagensPalavraMarcada.executa(comando);			
+		}
 
 		return "Comando inválido.";
 	}

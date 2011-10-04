@@ -1,10 +1,10 @@
 package aplicacao.acoes;
 
 import java.util.Iterator;
-import java.util.TreeMap;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.SortedMap;
+import java.util.TreeMap;
+
 import negocio.Mensagem;
 
 public class ListarTendencia {
@@ -18,12 +18,12 @@ public class ListarTendencia {
 			TreeMap<String, Integer> todasTendencias = Mensagem.listarTendencias();
 			String retorno = "";
 
-			Set msgSet = todasTendencias.entrySet();
-			Iterator i = msgSet.iterator();
+			Set<Entry<String, Integer>> msgSet = todasTendencias.entrySet();
+			Iterator<Entry<String, Integer>> i = msgSet.iterator();
 			
 			int contador = 0;
 			while ( i.hasNext() && (contador < totalDeRetorno) ) {
-	           Map.Entry m =(Map.Entry)i.next();
+	           Entry<String, Integer> m = i.next();
 	           
 		       String tendencia = (String)m.getKey();
 		       retorno += tendencia + '\n';      

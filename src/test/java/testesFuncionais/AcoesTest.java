@@ -423,7 +423,7 @@ public class AcoesTest extends TestCase {
 		retorno = Apresentacao.getInstancia().processa(comando);
 		assertEquals("ok", retorno);
 		
-		comando = "postar-mensagem joao Estou assistindo o #brasileirao na #tv";
+		comando = "postar-mensagem joao Estou assistindo o #brasileirao na #tv.";
 		retorno = Apresentacao.getInstancia().processa(comando);
 		assertEquals("ok", retorno);
 
@@ -454,7 +454,7 @@ public class AcoesTest extends TestCase {
 		comando = "listar-mensagens-com-palavra-marcada #tv";
 		retorno = Apresentacao.getInstancia().processa(comando);
 		String retornoEsperado = "";
-		retorno += "pedro Só passa desgraça na #tv.\n" +
+		retornoEsperado += "pedro Só passa desgraça na #tv.\n" +
 				   "maria Acabei de ver a #cozinha dos meus sonhos na #tv!\n" + 
 				   "joao Estou assistindo o #brasileirao na #tv.";		
 		assertEquals(retornoEsperado, retorno);		

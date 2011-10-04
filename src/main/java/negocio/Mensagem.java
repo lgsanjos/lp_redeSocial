@@ -3,7 +3,6 @@ package negocio;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,19 +13,17 @@ import persistencia.Persistencia;
 import persistencia.Tabela;
 
 
-class ValueComparator implements Comparator {
+class ValueComparator implements Comparator<Object> {
 
-	  Map base;
-	  public ValueComparator(Map base) {
+	  Map<String, Integer> base;
+	  public ValueComparator(Map<String, Integer> base) {
 	      this.base = base;
 	  }
 
 	  public int compare(Object a, Object b) {
 
-	    if((Integer)base.get(a) < (Integer)base.get(b)) {
+	    if((Integer)base.get(a) <= (Integer)base.get(b)) {
 	      return 1;
-	    } else if((Integer)base.get(a) == (Integer)base.get(b)) {
-	      return 0;
 	    } else {
 	      return -1;
 	    }
@@ -118,13 +115,27 @@ public class Mensagem extends Entidade {
 		return retorno;
 	}
 	
+	public static LinkedList<Mensagem> todas() {
+		
+		Tabela tabela = Persistencia.getInstancia().procuraTabela(Mensagem.nomeTabela);		
+		LinkedList<Mensagem> retorno = new LinkedList<Mensagem>();		
+		
+		if (tabela == null)
+			return null;
+		
+		for (Entidade msg : tabela)
+			retorno.add( (Mensagem) msg);
+		
+		return  retorno;		
+	}
+	
 	public static TreeMap<String, Integer> listarTendencias() {
 		
 		Tabela tabela = Persistencia.getInstancia().procuraTabela(Mensagem.nomeTabela);
 
 		TreeMap<String, Integer> contador = new TreeMap<String, Integer>();
         ValueComparator comparator =  new ValueComparator(contador);
-        TreeMap<String,Integer> sorted_map = new TreeMap(comparator);
+        TreeMap<String,Integer> sorted_map = new TreeMap<String, Integer>(comparator);
         
 		if (tabela == null) {
 			return sorted_map;
