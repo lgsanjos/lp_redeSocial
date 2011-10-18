@@ -130,7 +130,7 @@ public class Mensagem extends Entidade {
 	}
 	
 	public static TreeMap<String, Integer> listarTendencias() {
-		
+				
 		Tabela tabela = Persistencia.getInstancia().procuraTabela(Mensagem.nomeTabela);
 
 		TreeMap<String, Integer> contador = new TreeMap<String, Integer>();
@@ -145,7 +145,7 @@ public class Mensagem extends Entidade {
 		for (int i = 0; i < tabela.size(); i++) {
 			msg = (Mensagem) tabela.get(i);
 			
-			Pattern MY_PATTERN = Pattern.compile("#([a-z]|[A-Z]|[0-9]|[á-í])*");
+			Pattern MY_PATTERN = Pattern.compile("#([a-z]|[A-Z]|[0-9]|[ï¿½-ï¿½])*");
 			Matcher m = MY_PATTERN.matcher(msg.getMensagem());
 			while (m.find()) {
 			    String s = m.group(0).trim();

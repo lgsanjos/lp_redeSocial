@@ -2,12 +2,12 @@ package aplicacao.acoes;
 
 import negocio.Usuario;
 
-public class CriarUsuario {
+public class CriarUsuario extends AcaoAbstract {
 	
-	public static String executa(String comando) {
+	public String executa(String comando) {
 
 		try {
-			String nome = AcoesHelper.parseComando(comando)[0];
+			String nome = AcaoAbstract.parseComando(comando)[0];
 			
 			Usuario user = new Usuario();
 			user.setNome(nome);

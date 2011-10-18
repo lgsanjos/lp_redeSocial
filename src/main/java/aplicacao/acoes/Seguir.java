@@ -2,12 +2,12 @@ package aplicacao.acoes;
 
 import negocio.Relacionamento;
 
-public class Seguir {
+public class Seguir extends AcaoAbstract {
 	
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		
 		try {
-			String[] parsed = AcoesHelper.parseComando(comando);
+			String[] parsed = AcaoAbstract.parseComando(comando);
 			
 			String nomeSeguidor = parsed[0];
 			String nomeSeguido = parsed[1];

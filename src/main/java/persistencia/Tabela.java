@@ -17,7 +17,7 @@ public class Tabela extends LinkedList<Entidade> {
 		this.nome = nome;
 	}
 	
-	public int proximaId() {
+	public synchronized int proximaId() {
 		return (this.maiorId + 1);
 	}
 	

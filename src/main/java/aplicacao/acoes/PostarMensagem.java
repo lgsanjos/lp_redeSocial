@@ -2,7 +2,7 @@ package aplicacao.acoes;
 
 import negocio.Usuario;
 
-public class PostarMensagem {
+public class PostarMensagem extends AcaoAbstract {
 
 	private static String extrairNome(String comando) {
 	  if (comando.indexOf(" ") > 0) {
@@ -19,7 +19,7 @@ public class PostarMensagem {
  	  return "";
 	}
 
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		try {
 			
 			String nomeUsuario = extrairNome(comando);

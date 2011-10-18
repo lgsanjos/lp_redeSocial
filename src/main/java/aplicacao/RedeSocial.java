@@ -5,7 +5,7 @@ public class RedeSocial {
 	public static void main(String[] params) {
 		
 		System.out.println("Rede Social - Luiz Guilherme S. Anjos RA: 45220");
-        System.out.println("Iniciando servidor");
+        System.out.println("Iniciando servidor...");
         
         try {
         	SocketServer servidor = new SocketServer();

@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import negocio.Relacionamento;
 import negocio.Usuario;
 
-public class ListarSeguidos {
+public class ListarSeguidos extends AcaoAbstract {
 	
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		
 		try {
 			LinkedList<Relacionamento> rel = Relacionamento.todosDadoSeguidor(comando) ;

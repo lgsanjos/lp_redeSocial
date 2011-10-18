@@ -19,10 +19,12 @@ public class Persistencia {
 		for (int i = 0; i < this.tabelas.size(); i ++) {
 			tabelas.get(i).clear();
 		}
+		
+		tabelas.clear();
 		tabelas = new LinkedList<Tabela>();
 	}
 	
-	public Tabela criaNovaTabelaSeNaoExiste(String nome) {
+	public synchronized Tabela criaNovaTabelaSeNaoExiste(String nome) {
 		Tabela procuraTabela;
 		procuraTabela = this.procuraTabela(nome);
 		
@@ -45,7 +47,7 @@ public class Persistencia {
 		return null;
 	}	
 
-	public Entidade procuraElemenetoNaTabela(String nomeTabela, int id) {
+	public Entidade procuraElementoNaTabela(String nomeTabela, int id) {
 		Tabela tabela = this.procuraTabela(nomeTabela);
 		
 		if (tabela != null) {

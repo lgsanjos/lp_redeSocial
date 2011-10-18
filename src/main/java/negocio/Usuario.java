@@ -1,7 +1,5 @@
 package negocio;
 
-import java.util.LinkedList;
-
 import persistencia.CheckParamException;
 import persistencia.Entidade;
 import persistencia.Persistencia;
@@ -11,8 +9,6 @@ public class Usuario extends Entidade {
 	
 	private String nome;
 	public static final String nomeTabela = "usuario";
-	private LinkedList<Usuario> seguidos = new LinkedList<Usuario>();
-	private LinkedList<Usuario> seguidores = new LinkedList<Usuario>();
 	
 	public Usuario() {
 		super();
@@ -46,7 +42,7 @@ public class Usuario extends Entidade {
 		}
 		
 		nomeDuplicado = (Usuario.procuraUsuario(this.nome) != null);
-				
+		
 		if (nomeDuplicado) {
 			throw new CheckParamException("usuario-ja-existe");
 		}
@@ -55,7 +51,6 @@ public class Usuario extends Entidade {
 	public static Usuario procuraUsuario(String nome) {
 		
 		Tabela tabela = Persistencia.getInstancia().procuraTabela("usuario");
-		
 		if (tabela == null) {
 			return null;
 		}	
@@ -71,33 +66,10 @@ public class Usuario extends Entidade {
 	}
 	
 	public void postarMensagem(String mensagem) throws CheckParamException {
-		
 		Mensagem msg = new Mensagem();
 		msg.setMensagem(mensagem);
 		msg.setUsuarioCriador(this);
 		msg.salvar();
 	}
 	
-	public void addNovoSeguidor(String nome) throws CheckParamException {
-		
-		Usuario usuario = Usuario.procuraUsuario(nome);
-		if (usuario == null) {
-			throw new CheckParamException("seguidor-nao-encontrado");
-		}
-		
-		this.seguidores.add(usuario);
-		
-	}	
-	
-	public void seguir(String nome) throws CheckParamException {
-		
-		Usuario usuario = Usuario.procuraUsuario(nome);
-		if (usuario == null) {
-			throw new CheckParamException("seguido-nao-encontrado");
-		}
-		
-		this.seguidos.add(usuario);
-		usuario.addNovoSeguidor(this.getNome());
-	}
-
 }

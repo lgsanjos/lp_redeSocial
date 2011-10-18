@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 import negocio.Mensagem;
 
-public class ListarMensagensPalavraMarcada {
+public class ListarMensagensPalavraMarcada extends AcaoAbstract {
 
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		
 		try {
 			LinkedList<Mensagem> todasMensagens = Mensagem.todas();

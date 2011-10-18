@@ -115,7 +115,6 @@ public class Relacionamento extends Entidade {
 		
 		this.usuarioSeguidor = Usuario.procuraUsuario(usuarioSeguidor);
 		this.usuarioSeguido = Usuario.procuraUsuario(usuarioASeguir);
-		
 		this.salvar();
 	}
 	

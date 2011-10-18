@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+while True:
+    curso = raw_input('Qual é o seu curso, cc ou inf? ')
+    if curso == 'cc' or curso == 'inf':
+        break;
+
+if curso == 'cc':
+    cod = 1028
+else:
+    cod = 1225
+
+while True:
+    ras = raw_input('Quais os ra\'s dos membros da equipe (separados por espaço)? ')
+    try:
+       ras = [int(ra) for ra in ras.split(' ')]
+       if len(ras) != 0:
+           break
+    except:
+       pass
+
+nome_arquivo = "%d_%s.zip" % (cod, '_'.join(map(str, ras)))
+
+from subprocess import call
+print "Criando arquivo", nome_arquivo
+ret = call("zip -q -r " + nome_arquivo + " * ", shell=True)
+
+if ret == 0:
+    print 'O arquivo foi criado com sucesso. Confirme o conteúdo do arquivo antes de fazer o envio.'
+else:
+    print 'Problemas ao criar o arquivo'

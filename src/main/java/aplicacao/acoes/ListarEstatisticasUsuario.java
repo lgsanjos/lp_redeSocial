@@ -3,13 +3,13 @@ package aplicacao.acoes;
 import negocio.Mensagem;
 import negocio.Relacionamento;
 
-public class ListarEstatisticasUsuario {
+public class ListarEstatisticasUsuario extends AcaoAbstract {
 	
 	// número de mensagens, seguidos e seguidores
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		
 		try {
-			String nome = AcoesHelper.parseComando(comando)[0];
+			String nome = AcaoAbstract.parseComando(comando)[0];
 			String retorno = "";
 			
 			retorno += Mensagem.todasDadoUsuario(nome).size();

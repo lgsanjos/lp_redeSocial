@@ -7,11 +7,11 @@ import java.util.TreeMap;
 
 import negocio.Mensagem;
 
-public class ListarTendencia {
+public class ListarTendencia extends AcaoAbstract{
 	
 	private static final int totalDeRetorno = 5;
 		
-	public static String executa(String comando) {
+	public String executa(String comando) {
 		
 		try {
 			
